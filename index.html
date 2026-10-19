@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nagi · Sushi & Asian cuisine in Hay Riad, Rabat</title>
+<meta name="description" content="Authentic Asian cuisine made by Japanese hands. Sushi, hand-pulled noodles and aburi on Avenue des Orangers, Hay Riad, Rabat. Open every day, 12:00 to 23:30.">
+<meta name="theme-color" content="#08111A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nagi · Sushi &amp; Asian cuisine in Hay Riad, Rabat">
+<meta property="og:description" content="Authentic Asian cuisine, made by Japanese hands. Book a table on Avenue des Orangers, Hay Riad.">
+<meta property="og:image" content="https://salimbennani39.github.io/nagi-rabat/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/logo-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/plate-bare.webp">
+<link rel="stylesheet" href="scrollcraft.css">
+<style>
+:root {
+  --sc-canvas:     #08111A;
+  --sc-surface:    #0F1E2B;
+  --sc-ink:        #F1ECE2;
+  --sc-ink-soft:   #AEB8C1;
+  --sc-accent:     #D9AE5B;
+  --sc-accent-ink: #0A1420;
+  --sc-font-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --sc-font-text:    "Geist", system-ui, sans-serif;
+  --sc-font-mono:    "Geist", system-ui, sans-serif;
+  --sc-track-tight: -0.012em;
+  --sc-track-snug: -0.006em;
+  --sc-shadow-color: 212 60% 3%;
+
+  --paper: #EFE8DA;
+  --paper-ink: #13202B;
+  --paper-soft: #4F5A63;
+  --gold-deep: #7E5A1C;
+  --lacquer: #050A10;
+  --brand-blue: #0F2A3D;
+  --slip-w: 10.25rem;
+}
+
+body { background: var(--sc-canvas); }
+.sc-display { font-weight: 500; }
+.sc-display em { font-style: italic; font-weight: 500; }
+.sc-body { line-height: 1.66; letter-spacing: 0.002em; }
+
+/* ------------------------------------------------------ the order slip --
+   The nav is a paper chit from the pass: the courses by name, ticked as they
+   are served. It jumps. */
+.slip {
+  position: fixed; z-index: var(--sc-z-chrome);
+  top: 1.25rem; right: 1.25rem; width: var(--slip-w);
+  background: var(--paper); color: var(--paper-ink);
+  padding: 0.9rem 0.9rem 1.15rem;
+  box-shadow: 0 1px 1px hsl(212 60% 3% / .35), 0 10px 30px -8px hsl(212 60% 3% / .55);
+  /* perforated bottom edge */
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 10px 100%;
+          mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 10px 100%;
+  transform: rotate(0.6deg);
+  transition: transform var(--sc-d-base) var(--sc-ease-out);
+}
+.slip__mark {
+  display: block; height: 2.15rem; margin: 0 auto 0.6rem;
+  aspect-ratio: 1033 / 352;
+  background: var(--paper-ink);
+  -webkit-mask: url(assets/logo-word.svg) center / contain no-repeat;
+          mask: url(assets/logo-word.svg) center / contain no-repeat;
+}
+.slip__head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--paper-soft);
+  border-block: 1px dashed color-mix(in oklab, var(--paper-ink) 35%, transparent);
+  padding-block: 0.35rem; margin-bottom: 0.45rem;
+}
+.slip ol { list-style: none; margin: 0; padding: 0; }
+.slip li a {
+  display: grid; grid-template-columns: 0.85rem 1fr; gap: 0.5rem; align-items: center;
+  padding: 0.28rem 0.1rem; text-decoration: none;
+  font-size: 0.86rem; line-height: 1.25; color: var(--paper-soft);
+  border-radius: 3px;
+  transition: color var(--sc-d-fast) var(--sc-ease-out);
+}
+.slip li a::before {
+  content: ""; width: 0.78rem; height: 0.78rem; border: 1px solid currentColor; border-radius: 2px;
+}
+.slip li a[aria-current="step"] { color: var(--paper-ink); font-weight: 600; }
+.slip li a.is-served::before, .slip li a[aria-current="step"]::before {
+  background:
+    linear-gradient(45deg, transparent 44%, var(--paper-ink) 44% 56%, transparent 56%),
+    linear-gradient(-45deg, transparent 44%, var(--paper-ink) 44% 56%, transparent 56%);
+  border-color: var(--paper-ink);
+}
+.slip li a[aria-current="step"]::before { background: var(--paper-ink); box-shadow: inset 0 0 0 2px var(--paper); }
+@media (hover: hover) and (pointer: fine) {
+  .slip li a:hover { color: var(--paper-ink); }
+  .slip:hover { transform: rotate(0deg); }
+}
+.slip__book {
+  display: block; margin-top: 0.75rem; text-align: center; text-decoration: none;
+  background: var(--paper-ink); color: var(--paper);
+  font-weight: 600; font-size: 0.9rem; letter-spacing: 0.01em;
+  padding: 0.62rem 0.5rem; border-radius: 3px;
+  transition: background-color var(--sc-d-fast) var(--sc-ease-out), transform 120ms var(--sc-ease-out);
+}
+.slip__book:active { transform: translateY(1px); }
+@media (hover: hover) and (pointer: fine) { .slip__book:hover { background: #22384A; } }
+.slip :focus-visible { outline-color: var(--gold-deep); }
+.slip__toggle { display: none; }
+
+/* phones: the slip folds to one line at the bottom and opens on tap */
+@media (max-width: 1099px) {
+  .slip {
+    top: auto; bottom: max(0.75rem, env(safe-area-inset-bottom)); right: 0.75rem; left: 0.75rem;
+    width: auto; transform: none; padding: 0.55rem 0.55rem 0.55rem 0.8rem;
+    -webkit-mask: none; mask: none; border-radius: 4px;
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.6rem;
+  }
+  .slip__mark { height: 1.5rem; margin: 0; }
+  .slip__head { display: none; }
+  .slip__toggle {
+    display: flex; align-items: center; gap: 0.45rem; min-height: 44px;
+    background: none; border: 0; padding: 0 0.25rem; color: var(--paper-ink);
+    font-size: 0.9rem; font-weight: 500; text-align: left; cursor: pointer;
+  }
+  .slip__toggle::after { content: ""; width: 0.45rem; height: 0.45rem; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: rotate(-135deg) translateY(-2px); transition: transform var(--sc-d-base) var(--sc-ease-out); }
+  .slip[data-open="true"] .slip__toggle::after { transform: rotate(45deg); }
+  .slip ol {
+    position: absolute; left: 0; right: 0; bottom: calc(100% + 0.5rem);
+    background: var(--paper); padding: 0.6rem 0.8rem; border-radius: 4px;
+    box-shadow: 0 10px 30px -8px hsl(212 60% 3% / .6);
+    opacity: 0; transform: translateY(8px); pointer-events: none;
+    transition: opacity var(--sc-d-base) var(--sc-ease-out), transform var(--sc-d-base) var(--sc-ease-out);
+  }
+  .slip[data-open="true"] ol { opacity: 1; transform: none; pointer-events: auto; }
+  .slip li a { padding: 0.62rem 0.1rem; font-size: 0.95rem; }
+  .slip__book { margin: 0; padding: 0.7rem 1rem; min-height: 44px; display: flex; align-items: center; }
+}
+
+/* ------------------------------------------------------------- course 1 -- */
+#plate { background: #060C13; }
+.hero { background: radial-gradient(120% 90% at 70% 60%, #0C1A26 0%, #060C13 70%); }
+.hero__room {
+  position: absolute; inset: -8%; z-index: 0;
+  background: url(assets/hero-room.webp) center / cover no-repeat;
+  opacity: var(--room-o, 0.18);
+  transform: translate3d(0, var(--room-y, 0px), 0) scale(var(--room-s, 1.12));
+  will-change: transform, opacity;
+}
+.hero__glow {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(42% 52% at var(--glow-x, 68%) 58%, hsl(32 80% 52% / var(--glow-a, 0.06)), transparent 70%);
+}
+.hero__plate {
+  position: absolute; z-index: 4;
+  right: calc(var(--slip-w) - 1.5rem); top: 50%;
+  width: min(54vw, 100vh); aspect-ratio: 1 / 1;
+  translate: 0 -46%;
+  transform: translate3d(var(--plate-x, 0px), var(--plate-y, 0px), 0) rotate(var(--plate-r, 0deg)) scale(var(--plate-s, 0.94));
+  transform-origin: 60% 70%;
+  will-change: transform, filter;
+  filter: brightness(var(--plate-b, 0.32)) saturate(var(--plate-sat, 0.8));
+  touch-action: pan-y;
+  -webkit-mask: radial-gradient(52% 40% at 55% 54%, #000 46%, #0000 100%);
+          mask: radial-gradient(52% 40% at 55% 54%, #000 46%, #0000 100%);
+}
+.hero__plate canvas, .hero__plate > img:not(.topping) { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; }
+.topping { position: absolute; max-width: none; opacity: 0; transform-origin: 50% 90%; will-change: transform, opacity; }
+.hero__flame { position: absolute; inset: 0; z-index: 6; pointer-events: none; width: 100%; height: 100%; max-width: none; }
+.hero__copy {
+  position: absolute; z-index: 5;
+  left: var(--sc-gutter); top: 50%; translate: 0 -54%;
+  max-width: min(36rem, 38vw);
+}
+.hero__copy h1 { font-size: clamp(2.8rem, 1.3rem + 3.5vw, 5.4rem); line-height: 0.98; }
+.hero__copy p { margin-top: var(--sc-5); color: var(--sc-ink-soft); max-width: 34ch; font-size: var(--sc-t-lg); line-height: 1.5; }
+.hero__copy .btn { margin-top: var(--sc-7); }
+.hero__hint {
+  position: absolute; z-index: 7; pointer-events: none;
+  left: 50%; bottom: clamp(1.5rem, 7vh, 4rem); translate: -50% 0;
+  font-size: var(--sc-t-sm); letter-spacing: 0.04em; color: var(--sc-ink);
+  padding: 0.5rem 0.9rem; border-radius: 999px;
+  background: color-mix(in oklab, #060C13 72%, transparent);
+  border: 1px solid color-mix(in oklab, var(--sc-accent) 45%, transparent);
+  opacity: var(--hint-o, 0);
+  white-space: nowrap;
+}
+.hero__hint b { color: var(--sc-accent); font-weight: 600; }
+@media (max-width: 860px) {
+  .hero__copy { top: calc(env(safe-area-inset-top) + 4.5rem); translate: none; max-width: none; right: var(--sc-gutter); }
+  .hero__copy h1 { font-size: clamp(2.6rem, 11vw, 3.4rem); }
+  .hero__copy p { font-size: var(--sc-t-base); margin-top: var(--sc-4); }
+  .hero__copy .btn { display: none; }
+  .hero__plate { right: auto; left: 50%; top: auto; bottom: 4.5rem; width: min(118vw, 74svh); translate: -50% 0; }
+  .hero__hint { bottom: 5.5rem; }
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none;
+  background: var(--sc-accent); color: var(--sc-accent-ink);
+  font-weight: 600; letter-spacing: 0.01em; padding: 0.9rem 1.5rem; border-radius: 3px;
+  box-shadow: var(--sc-e1);
+  transition: background-color var(--sc-d-fast) var(--sc-ease-out), transform 120ms var(--sc-ease-out);
+}
+.btn:active { transform: translateY(1px); }
+@media (hover: hover) and (pointer: fine) { .btn:hover { background: #E6BE6E; } }
+
+/* ------------------------------------------------------------- course 2 -- */
+#hands { background: #0B0D10; --sc-canvas: #0B0D10; }
+.hands { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--sc-6); align-items: end; padding-right: calc(var(--slip-w) + 2rem); }
+.hands__main { grid-column: 1 / span 6; position: relative; }
+.hands__main img { width: 100%; height: auto; aspect-ratio: 1372 / 1308; object-fit: cover; }
+.hands__inset {
+  position: absolute; width: 38%; right: -16%; bottom: -12%;
+  box-shadow: var(--sc-e3); border: 6px solid #0B0D10;
+}
+.hands__inset img { width: 100%; height: auto; }
+.hands__inset figcaption { font-size: var(--sc-t-xs); color: var(--sc-ink-soft); padding-top: 0.5rem; letter-spacing: 0.04em; }
+.hands__text { grid-column: 8 / span 5; padding-bottom: var(--sc-10); }
+.hands__text h2 { font-size: clamp(2.4rem, 1.4rem + 2.6vw, 4.2rem); }
+@media (max-width: 1099px) { .hands { padding-right: 0; } }
+@media (max-width: 860px) {
+  .hands { grid-template-columns: 1fr; gap: var(--sc-9); }
+  .hands__main, .hands__text { grid-column: 1; }
+  .hands__inset { width: 46%; right: -2%; bottom: -18%; }
+  .hands__text { padding-bottom: 0; }
+}
+
+/* ------------------------------------------------------------- course 3 -- */
+#noodles { background: #07090B; --sc-canvas: #07090B; }
+.noodles__copy { max-width: min(30rem, 40vw); right: calc(var(--slip-w) + 2.5rem); }
+.noodles__copy p { margin-top: var(--sc-4); margin-left: auto; color: var(--sc-ink); }
+.flour { position: absolute; inset: 0; z-index: 2; pointer-events: none; width: 100%; height: 100%; max-width: none; }
+@media (max-width: 860px) { .noodles__copy { max-width: none; right: var(--sc-gutter); bottom: 6.5rem; } }
+
+/* ------------------------------------------------------------- course 4 -- */
+#plates { background: var(--brand-blue); --sc-canvas: var(--brand-blue); --sc-ink-soft: #B6C3CE; }
+#plates [data-sc-stage] { display: flex; align-items: center; }
+.rail { gap: clamp(1.5rem, 3vw, 3.5rem); padding-inline: var(--sc-gutter) calc(var(--slip-w) + 3rem); align-items: center; }
+.rail__lead { flex: 0 0 min(26rem, 80vw); }
+.rail__lead h2 { font-size: var(--sc-t-3xl); }
+.dish { flex: 0 0 clamp(15rem, 23vw, 21rem); margin: 0; }
+.dish__img { aspect-ratio: 4 / 5; overflow: hidden; border-radius: 2px; box-shadow: var(--sc-e3); background: #0A1F2E; }
+.dish__img img { width: 100%; height: 100%; object-fit: cover; }
+.dish figcaption { padding-top: var(--sc-4); }
+.dish__kind { font-size: var(--sc-t-xs); letter-spacing: 0.14em; text-transform: uppercase; color: var(--sc-accent); }
+.dish h3 { font-family: var(--sc-font-display); font-weight: 500; font-size: var(--sc-t-xl); line-height: 1.1; margin: 0.25rem 0 0.4rem; }
+.dish p { margin: 0; font-size: var(--sc-t-sm); color: var(--sc-ink-soft); line-height: 1.55; max-width: 30ch; }
+.rail__note { flex: 0 0 18rem; font-family: var(--sc-font-display); font-size: var(--sc-t-xl); line-height: 1.2; color: var(--sc-ink); }
+.rail__note a { color: var(--sc-accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .dish { opacity: calc(0.55 + 0.45 * var(--settle, 1)); transform: translate3d(0, calc((1 - var(--settle, 1)) * 26px), 0); }
+}
+
+/* ------------------------------------------------------------- course 5 -- */
+#room { background: #0A0806; --sc-canvas: #0A0806; }
+.room__layer { position: absolute; inset: 0; }
+.room__layer img { width: 100%; height: 100%; object-fit: cover; max-width: none; }
+.room__outside img { transform: scale(calc(1 + 0.12 * var(--sc-p, 0))); transform-origin: 62% 46%; filter: brightness(0.82); }
+.room__inside { z-index: 1; }
+.room__inside img { transform: scale(calc(1.14 - 0.1 * var(--sc-p, 0))); }
+.room__frame {
+  position: absolute; z-index: 3; margin: 0; box-shadow: var(--sc-e3); border: 5px solid #0A0806;
+}
+.room__frame img { width: 100%; height: auto; display: block; }
+.room__frame--peacock { width: clamp(9rem, 15vw, 15rem); right: calc(var(--slip-w) + 4rem); top: 30%; }
+.room__frame--terrace { width: clamp(11rem, 19vw, 19rem); right: calc(var(--slip-w) + 12vw); top: 55%; }
+.room__copy { z-index: 5; }
+.room__copy p { margin-top: var(--sc-4); color: var(--sc-ink); }
+.room__copy .sc-display { font-size: var(--sc-t-3xl); }
+.room__scrim { z-index: 4; }
+@media (max-width: 860px) {
+  .room__frame--peacock { width: 34vw; right: var(--sc-gutter); top: 9%; }
+  .room__frame--terrace { width: 40vw; right: auto; left: var(--sc-gutter); top: 26%; }
+}
+
+/* ------------------------------------------------------------- course 6 -- */
+#card {
+  background: var(--paper); color: var(--paper-ink);
+  --sc-canvas: var(--paper); --sc-ink: var(--paper-ink); --sc-ink-soft: var(--paper-soft);
+  --sc-accent: var(--gold-deep); --sc-accent-ink: var(--paper);
+}
+.card { padding-right: calc(var(--slip-w) + 2rem); }
+.card__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--sc-5); border-bottom: 1px solid color-mix(in oklab, var(--paper-ink) 25%, transparent); padding-bottom: var(--sc-5); }
+.card__head h2 { font-size: var(--sc-t-3xl); }
+.card__head p { max-width: 34ch; color: var(--paper-soft); margin: 0; }
+.card__cols { columns: 3 17rem; column-gap: var(--sc-8); margin-top: var(--sc-7); }
+.card__group { break-inside: avoid; margin: 0 0 var(--sc-7); }
+.card__group h3 { font-family: var(--sc-font-display); font-weight: 600; font-size: var(--sc-t-xl); margin: 0 0 0.15rem; }
+.card__group > p { font-size: var(--sc-t-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--paper-soft); margin: 0 0 var(--sc-3); }
+.card dl { margin: 0; }
+.card__row { display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; gap: 0.5rem; padding: 0.32rem 0; }
+.card__row::after { content: none; }
+.card__row dt { font-weight: 500; }
+.card__row dt small { display: block; font-weight: 400; color: var(--paper-soft); font-size: var(--sc-t-xs); line-height: 1.4; }
+.card__row .lead { border-bottom: 1px dotted color-mix(in oklab, var(--paper-ink) 40%, transparent); transform: translateY(-0.3em); }
+.card__row dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 600; }
+.card__foot { display: flex; flex-wrap: wrap; gap: var(--sc-4) var(--sc-6); align-items: center; border-top: 1px solid color-mix(in oklab, var(--paper-ink) 25%, transparent); padding-top: var(--sc-5); }
+.card__foot p { margin: 0; color: var(--paper-soft); font-size: var(--sc-t-sm); }
+.card__foot a:not(.btn) { color: var(--paper-ink); font-weight: 500; }
+#card .btn { background: var(--paper-ink); color: var(--paper); }
+@media (hover: hover) and (pointer: fine) { #card .btn:hover { background: #22384A; } }
+@media (max-width: 1099px) { .card { padding-right: 0; } }
+
+/* ------------------------------------------------------------- course 7 -- */
+#check { background: var(--lacquer); --sc-canvas: var(--lacquer); }
+.tray {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background:
+    radial-gradient(60% 50% at 50% 46%, #1A0C08 0%, transparent 70%),
+    radial-gradient(90% 70% at 50% 50%, #0B1520 0%, var(--lacquer) 75%);
+}
+.chit {
+  position: relative; width: min(25rem, calc(100vw - 2.5rem));
+  background: var(--paper); color: var(--paper-ink);
+  padding: 1.6rem 1.6rem 1.9rem;
+  box-shadow: 0 2px 2px hsl(212 60% 3% / .4), 0 30px 60px -20px hsl(212 60% 2% / .8);
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 12px 100%;
+          mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 12px 100%;
+  rotate: -1.2deg;
+}
+.chit__mark { width: 7.5rem; aspect-ratio: 1033 / 352; margin: 0 auto; background: var(--paper-ink);
+  -webkit-mask: url(assets/logo-word.svg) center / contain no-repeat; mask: url(assets/logo-word.svg) center / contain no-repeat; }
+.chit h2 { font-family: var(--sc-font-display); font-weight: 500; font-size: var(--sc-t-2xl); line-height: 1; text-align: center; margin: 1.1rem 0 1rem; }
+.chit dl { margin: 0; border-top: 1px dashed color-mix(in oklab, var(--paper-ink) 40%, transparent); }
+.chit__row { display: grid; grid-template-columns: 6.2rem 1fr; gap: 0.75rem; padding: 0.55rem 0; border-bottom: 1px dashed color-mix(in oklab, var(--paper-ink) 25%, transparent); font-size: var(--sc-t-sm); line-height: 1.45; }
+.chit__row dt { color: var(--paper-soft); }
+.chit__row dd { margin: 0; }
+.chit__row a { color: var(--paper-ink); }
+.chit__total { display: flex; justify-content: space-between; align-items: center; margin-top: 1.1rem; gap: 1rem; }
+.chit__total span { font-size: var(--sc-t-xs); letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper-soft); }
+.chit .btn { background: var(--paper-ink); color: #F3D79C; }
+@media (hover: hover) and (pointer: fine) { .chit .btn:hover { background: #22384A; } }
+.chit :focus-visible { outline-color: var(--gold-deep); }
+.foot { position: absolute; bottom: 1.25rem; left: var(--sc-gutter); right: var(--sc-gutter); display: flex; justify-content: space-between; gap: 1rem; font-size: var(--sc-t-xs); color: #8E9AA5; }
+.foot a { color: inherit; }
+@media (max-width: 1099px) { .foot { bottom: 5.75rem; } .tray { place-items: start center; padding-top: 12svh; } }
+
+/* the course boundary is a clearing, never a crossfade */
+.course { position: relative; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__plate { transform: none; }
+  .hero__room { transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="sc-grain" aria-hidden="true"></div>
+
+<nav class="slip" id="slip" aria-label="Courses">
+  <a class="slip__mark" href="#plate" aria-label="Nagi, back to the top"></a>
+  <div class="slip__head"><span>Table</span><span>Hay Riad</span></div>
+  <button class="slip__toggle" type="button" aria-expanded="false" aria-controls="slip-list"><span data-current>The first plate</span></button>
+  <ol id="slip-list">
+    <li><a href="#plate">The first plate</a></li>
+    <li><a href="#hands">The hands</a></li>
+    <li><a href="#noodles">Pulled by hand</a></li>
+    <li><a href="#plates">From the pass</a></li>
+    <li><a href="#room">The room</a></li>
+    <li><a href="#card">The card</a></li>
+    <li><a href="#check">The check</a></li>
+  </ol>
+  <a class="slip__book" href="https://book.saturdayzapp.com/Nagi" target="_blank" rel="noopener">Book table</a>
+</nav>
+
+<main>
+
+  <!-- 1 · THE FIRST PLATE. Peak. Pinned stage, bespoke layers + the aburi torch. -->
+  <section id="plate" class="course" data-sc-act="pin" data-sc-span="4" aria-labelledby="h-plate">
+    <div data-sc-stage class="hero" data-hero>
+      <div class="hero__room" aria-hidden="true"></div>
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__copy" data-sc-cue="0 0.62 0">
+        <h1 id="h-plate" class="sc-display">Authentic Asian cuisine, made by <em>Japanese hands.</em></h1>
+        <p>Sushi, hand-pulled noodles and fire. Hay Riad, Rabat, since 2009.</p>
+        <a class="btn" href="https://book.saturdayzapp.com/Nagi" target="_blank" rel="noopener">Book table</a>
+      </div>
+      <div class="hero__plate" data-plate>
+        <img src="assets/plate-bare.webp" width="1400" height="1400" alt="Four nigiri of shrimp, red tuna, salmon and white fish on a blue ceramic plate, held in black-gloved hands.">
+        <img class="topping" data-topping src="assets/top-whitefish.webp" alt="" style="left:60.107%;top:43.848%;width:20.02%;height:10.254%">
+        <img class="topping" data-topping src="assets/top-salmon.webp" alt="" style="left:46.387%;top:46.777%;width:22.217%;height:12.256%">
+        <img class="topping" data-topping src="assets/top-tuna.webp" alt="" style="left:32.129%;top:49.316%;width:19.922%;height:10.742%">
+        <img class="topping" data-topping src="assets/top-shrimp.webp" alt="" style="left:17.627%;top:51.025%;width:20.85%;height:10.986%">
+        <canvas data-sear aria-hidden="true"></canvas>
+      </div>
+      <canvas class="hero__flame" data-flame aria-hidden="true"></canvas>
+      <p class="hero__hint" data-hint aria-live="polite"><b>Aburi.</b> <span data-hint-text>Drag across the fish to sear it</span></p>
+    </div>
+  </section>
+
+  <!-- 2 · THE HANDS. Quiet after the fire. -->
+  <section id="hands" class="course sc-section" aria-labelledby="h-hands">
+    <div class="sc-wrap hands">
+      <figure class="hands__main" style="margin:0" data-sc-in>
+        <img src="assets/chef-torch.webp" width="1372" height="1308" loading="lazy" alt="A chef in a bandana finishes a roll with tweezers while smoke rises behind him.">
+        <figure class="hands__inset" style="margin:0" data-sc-parallax="-0.9">
+          <img src="assets/chef-bw.webp" width="772" height="1148" loading="lazy" alt="A chef at work behind the counter, in black and white.">
+          <figcaption>At the counter, Hay Riad.</figcaption>
+        </figure>
+      </figure>
+      <div class="hands__text sc-stack" data-sc-in data-sc-stagger="70">
+        <h2 id="h-hands" class="sc-display">The hands behind the counter.</h2>
+        <p class="sc-body">Our kitchen is led by Japanese chefs, and it shows in the small things: the seasoning of the rice, the line of the cut, the finish on every piece.</p>
+        <p class="sc-body">Nagi has been feeding Hay Riad since 2009.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · PULLED BY HAND. The one craft gesture put under the wheel. -->
+  <section id="noodles" class="course" data-sc-act="scrub" data-sc-span="2.3" data-sc-dwell="0.3" aria-labelledby="h-noodles">
+    <div data-sc-stage>
+      <picture>
+        <source media="(max-width: 860px)" srcset="assets/noodle-v2-poster-m.jpg">
+        <img class="sc-stage__poster" src="assets/noodle-v2-poster.jpg" alt="">
+      </picture>
+      <video data-sc-scrub data-sc-src="assets/noodle-v2.mp4" data-sc-src-mobile="assets/noodle-v2-m.mp4" muted playsinline aria-label="A chef stretches a long rope of noodle dough, flour hanging in the air."></video>
+      <canvas class="flour" data-flour aria-hidden="true"></canvas>
+      <div class="sc-scrim sc-scrim--trail" aria-hidden="true"></div>
+      <div class="sc-copy sc-copy--trail noodles__copy" data-sc-cue="0.12 0.9 0.14 0.2">
+        <h2 id="h-noodles" class="sc-display sc-display--lg">Pulled by hand, in our kitchen.</h2>
+        <p class="sc-body">Stretched, folded and stretched again, until the dough gives you noodles with a bite.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · FROM THE PASS. Lateral reads as choice. -->
+  <section id="plates" class="course" data-sc-act="pan" data-sc-span="4.4" aria-labelledby="h-plates">
+    <div data-sc-stage>
+      <div class="rail" data-sc-pan="0.04">
+        <div class="rail__lead sc-stack">
+          <h2 id="h-plates" class="sc-display">From the pass.</h2>
+          <p class="sc-body">A few of the plates people come back for.</p>
+        </div>
+        <figure class="dish"><div class="dish__img" data-sc-tilt="5"><img src="assets/roll-salmon.webp" width="890" height="1070" loading="lazy" alt="Salmon-topped rolls with avocado, sesame and herbs on a blue ceramic plate."></div>
+          <figcaption><span class="dish__kind">Sushi</span><h3>Salmon &amp; avocado roll</h3><p>Fresh salmon over avocado and seasoned rice, sesame and herbs on top.</p></figcaption></figure>
+        <figure class="dish"><div class="dish__img" data-sc-tilt="5"><img src="assets/roll-tuna.webp" width="890" height="1072" loading="lazy" alt="Red tuna rolls with avocado, wasabi on the side."></div>
+          <figcaption><span class="dish__kind">Red tuna</span><h3>Red tuna roll</h3><p>Lacquered red tuna, cucumber and avocado.</p></figcaption></figure>
+        <figure class="dish"><div class="dish__img" data-sc-tilt="5"><img src="assets/noodles-bowl.webp" width="890" height="1072" loading="lazy" alt="A bowl of wok-tossed noodles with vegetables, chopsticks resting on the rim."></div>
+          <figcaption><span class="dish__kind">Kitchen</span><h3>Hand-made noodles</h3><p>Pulled in house, wok-tossed with vegetables and a dark, glossy sauce.</p></figcaption></figure>
+        <figure class="dish"><div class="dish__img" data-sc-tilt="5"><img src="assets/bento.webp" width="890" height="1070" loading="lazy" alt="A red lacquer bento box with rice, tempura shrimp, spring rolls and salad."></div>
+          <figcaption><span class="dish__kind">Bento</span><h3>The bento box</h3><p>Rice, tempura shrimp, spring rolls, salad and sauce, each in its place.</p></figcaption></figure>
+        <figure class="dish"><div class="dish__img" data-sc-tilt="5"><img src="assets/nems.webp" width="890" height="1070" loading="lazy" alt="Hands dipping a crisp spring roll, lettuce and herbs beside it."></div>
+          <figcaption><span class="dish__kind">To share</span><h3>House nems</h3><p>Rolled by hand and fried crisp, with lettuce and herbs for wrapping.</p></figcaption></figure>
+        <figure class="dish"><div class="dish__img" data-sc-tilt="5"><img src="assets/flan.webp" width="890" height="1070" loading="lazy" alt="Squares of caramel flan on a white dish over blue silk."></div>
+          <figcaption><span class="dish__kind">Dessert</span><h3>Crème caramel</h3><p>Soft, cold and cut in squares, under its own caramel.</p></figcaption></figure>
+        <p class="rail__note">The full card is just below, or <a href="#" target="_blank" rel="noopener">order on Glovo</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · THE ROOM. Outside becomes inside: one big wipe. -->
+  <section id="room" class="course" data-sc-act="pin" data-sc-span="2.6" aria-labelledby="h-room">
+    <div data-sc-stage>
+      <div class="room__layer room__outside" aria-hidden="true"><img src="assets/facade.webp" alt="" loading="lazy"></div>
+      <div class="room__layer room__inside" data-sc-reveal="iris" data-sc-reveal-at="0.06 0.5">
+        <img src="assets/room-blue.webp" loading="lazy" alt="The dining room: blue velvet chairs, lamps on every table, carved wood and a painted gold ceiling.">
+      </div>
+      <figure class="room__frame room__frame--peacock" data-sc-cue="0.42 1 0.12 0.06" data-sc-parallax="-1.1">
+        <img src="assets/peacock.webp" loading="lazy" alt="A tall lamp sculpted as a peacock, glowing amber beside a banana plant.">
+      </figure>
+      <figure class="room__frame room__frame--terrace" data-sc-cue="0.52 1 0.12 0.06" data-sc-parallax="-0.5">
+        <img src="assets/terrace.webp" loading="lazy" alt="The covered terrace at night, mustard velvet armchairs and open windows.">
+      </figure>
+      <div class="sc-scrim sc-scrim--lead room__scrim" aria-hidden="true"></div>
+      <div class="sc-copy sc-copy--lead room__copy" data-sc-cue="0.3 0.98 0.14 0.06">
+        <h2 id="h-room" class="sc-display">Step inside.</h2>
+        <p class="sc-body">Carved wood, blue velvet, a gold ceiling and a peacock made of light. Inside or on the terrace, on Avenue des Orangers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · THE CARD. Administrative, so compressed: flow. -->
+  <!-- PRICES TO CONFIRM WITH NAGI: taken from the newest menu photos found (about three years old). -->
+  <section id="card" class="course sc-section" aria-labelledby="h-card">
+    <div class="sc-wrap card">
+      <div class="card__head" data-sc-in>
+        <h2 id="h-card" class="sc-display">The card.</h2>
+        <p>A taste of the menu. Prices in dirhams. The full card is at the table.</p>
+      </div>
+      <div class="card__cols" data-sc-in data-sc-stagger="60">
+        <div class="card__group"><h3>Sashimi</h3><p>Four pieces</p><dl>
+          <div class="card__row"><dt>Salmon</dt><span class="lead"></span><dd>50</dd></div>
+          <div class="card__row"><dt>Scallop</dt><span class="lead"></span><dd>60</dd></div>
+          <div class="card__row"><dt>Salmon carpaccio</dt><span class="lead"></span><dd>55</dd></div>
+          <div class="card__row"><dt>Red tuna</dt><span class="lead"></span><dd>45</dd></div>
+          <div class="card__row"><dt>Red tuna carpaccio</dt><span class="lead"></span><dd>50</dd></div>
+        </dl></div>
+        <div class="card__group"><h3>Nigiri</h3><p>By the pair</p><dl>
+          <div class="card__row"><dt>Salmon <small>Shaké</small></dt><span class="lead"></span><dd>35</dd></div>
+          <div class="card__row"><dt>Red tuna</dt><span class="lead"></span><dd>40</dd></div>
+          <div class="card__row"><dt>Scallop <small>Hotate-gai</small></dt><span class="lead"></span><dd>50</dd></div>
+          <div class="card__row"><dt>Eel <small>Unagi</small></dt><span class="lead"></span><dd>50</dd></div>
+        </dl></div>
+        <div class="card__group"><h3>Rolls</h3><p>Makimono, six pieces</p><dl>
+          <div class="card__row"><dt>Red tuna roll <small>Lacquered tuna, cucumber, avocado</small></dt><span class="lead"></span><dd>85</dd></div>
+          <div class="card__row"><dt>Red tuna maki</dt><span class="lead"></span><dd>35</dd></div>
+        </dl></div>
+        <div class="card__group"><h3>Sushi at lunch</h3><p>Served with rice and vegetables</p><dl>
+          <div class="card__row"><dt>Japs 1 <small>4 cream cheese, 4 eby fry, 3 beef and cheese skewers</small></dt><span class="lead"></span><dd>120</dd></div>
+          <div class="card__row"><dt>Japs 2 <small>Vegetable salad, 3 chicken skewers</small></dt><span class="lead"></span><dd>85</dd></div>
+          <div class="card__row"><dt>Japs 3 <small>4 California shake, 4 California classic, 4 salmon sashimi, 3 chicken meatball skewers</small></dt><span class="lead"></span><dd>130</dd></div>
+        </dl></div>
+        <div class="card__group"><h3>Business lunch</h3><p>Each with a soda</p><dl>
+          <div class="card__row"><dt>Thai <small>Chicken nems, fresh noodles with Szechuan chicken</small></dt><span class="lead"></span><dd>110</dd></div>
+          <div class="card__row"><dt>China <small>Angel hair, Kung Pao chicken, steamed rice</small></dt><span class="lead"></span><dd>110</dd></div>
+        </dl></div>
+        <div class="card__group"><h3>To share</h3><p>Nems, sushi, skewers, noodles and water</p><dl>
+          <div class="card__row"><dt>Formula for two <small>4 nems, 18 sushi, noodles or 4 yakitori</small></dt><span class="lead"></span><dd>295</dd></div>
+          <div class="card__row"><dt>Formula for four <small>8 nems, 24 sushi, 8 skewers, Nagi fresh noodles</small></dt><span class="lead"></span><dd>645</dd></div>
+        </dl></div>
+      </div>
+      <div class="card__foot" data-sc-in>
+        <a class="btn" href="https://book.saturdayzapp.com/Nagi" target="_blank" rel="noopener">Book table</a>
+        <p>Or have it delivered: <a href="#" target="_blank" rel="noopener">order on Glovo</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · THE CHECK. The page stops and hands over the action. -->
+  <section id="check" class="course" data-sc-act="pin" data-sc-span="1.3" aria-labelledby="h-check">
+    <div data-sc-stage>
+      <div class="tray">
+        <div class="chit" data-sc-cue="0 1 0 0">
+          <div class="chit__mark" role="img" aria-label="Nagi"></div>
+          <h2 id="h-check">A table for tonight?</h2>
+          <dl>
+            <div class="chit__row"><dt>Address</dt><dd><a href="https://www.google.com/maps/search/?api=1&query=Hay+Riad+Rabat" target="_blank" rel="noopener">Avenue des Orangers, Hay Riad, Rabat 10000</a></dd></div>
+            <div class="chit__row"><dt>Open</dt><dd>Every day, 12:00 to 23:30</dd></div>
+            <div class="chit__row"><dt>Telephone</dt><dd><a href="tel:+34647591229">+34 647 591 229</a></dd></div>
+            <div class="chit__row"><dt>Delivery</dt><dd><a href="#" target="_blank" rel="noopener">Order on Glovo</a></dd></div>
+            <div class="chit__row"><dt>Instagram</dt><dd><a href="#" target="_blank" rel="noopener">@nagi.rabat</a></dd></div>
+          </dl>
+          <div class="chit__total"><span>Total</span><a class="btn" href="https://book.saturdayzapp.com/Nagi" target="_blank" rel="noopener">Book table</a></div>
+        </div>
+      </div>
+      <footer class="foot"><span>Nagi, Sushis &amp; Asian Cuisine</span><span>Hay Riad, Rabat</span></footer>
+    </div>
+  </section>
+
+</main>
+
+<script src="scrollcraft.js"></script>
+<script>ScrollCraft.mount(document.body);</script>
+<script src="nagi.js"></script>
+</body>
+</html>
