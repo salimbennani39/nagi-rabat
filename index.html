@@ -529,7 +529,7 @@ body { background: var(--sc-canvas); }
           <dl>
             <div class="chit__row"><dt>Address</dt><dd><a href="https://www.google.com/maps/search/?api=1&query=Hay+Riad+Rabat" target="_blank" rel="noopener">Avenue des Orangers, Hay Riad, Rabat 10000</a></dd></div>
             <div class="chit__row"><dt>Open</dt><dd>Every day, 12:00 to 23:30</dd></div>
-            <div class="chit__row"><dt>Telephone</dt><dd><a href="tel:+34647591229">+34 647 591 229</a></dd></div>
+            <div class="chit__row"><dt>Telephone</dt><dd><a href="https://salimbennani39.github.io/showcase/404.html">+34 647 591 229</a></dd></div>
             <div class="chit__row"><dt>Delivery</dt><dd><a href="#" target="_blank" rel="noopener">Order on Glovo</a></dd></div>
             <div class="chit__row"><dt>Instagram</dt><dd><a href="#" target="_blank" rel="noopener">@nagi.rabat</a></dd></div>
           </dl>
@@ -545,10 +545,12 @@ body { background: var(--sc-canvas); }
 <script src="scrollcraft.js"></script>
 <script>ScrollCraft.mount(document.body);</script>
 <script src="nagi.js"></script>
-<script>/* showcase: links that lead nowhere open the Showcase 404 */
+<script>/* showcase: links that lead nowhere, and booking / WhatsApp / call links, open the Showcase 404 */
 (()=>{const U='https://salimbennani39.github.io/showcase/404.html';
-const dead=a=>{const h=(a.getAttribute('href')||'').trim();return h===''||h==='#'||h==='#!'||/^javascript:/i.test(h)};
-addEventListener('click',e=>{if(e.defaultPrevented)return;const a=e.target.closest&&e.target.closest('a');
-if(a&&dead(a)){e.preventDefault();location.href=U;}});})();</script>
+const dead=a=>{const h=(a.getAttribute('href')||'').trim();return h===''||h==='#'||h==='#!'||/^javascript:/i.test(h)||/^(tel:|sms:|mailto:|https?:\/\/(api\.|web\.)?(wa\.me|whatsapp\.com))/i.test(h)};
+addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a');if(!a)return;
+const h=(a.getAttribute('href')||'').trim();const contact=/^(tel:|sms:|mailto:|https?:)/i.test(h);
+if(dead(a)&&(contact||!e.defaultPrevented)){e.preventDefault();e.stopImmediatePropagation();location.href=U;}},true);
+const o=window.open;window.open=function(u){if(/(wa\.me|whatsapp\.com|^tel:)/i.test(String(u||'')))return location.href=U,null;return o.apply(this,arguments)};})();</script>
 </body>
 </html>
