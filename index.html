@@ -545,5 +545,10 @@ body { background: var(--sc-canvas); }
 <script src="scrollcraft.js"></script>
 <script>ScrollCraft.mount(document.body);</script>
 <script src="nagi.js"></script>
+<script>/* showcase: links that lead nowhere open the Showcase 404 */
+(()=>{const U='https://salimbennani39.github.io/showcase/404.html';
+const dead=a=>{const h=(a.getAttribute('href')||'').trim();return h===''||h==='#'||h==='#!'||/^javascript:/i.test(h)};
+addEventListener('click',e=>{if(e.defaultPrevented)return;const a=e.target.closest&&e.target.closest('a');
+if(a&&dead(a)){e.preventDefault();location.href=U;}});})();</script>
 </body>
 </html>
